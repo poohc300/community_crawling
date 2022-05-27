@@ -5,7 +5,7 @@ const puppeteer = require('puppeteer');
         headless : false
     });
     const page = await browser.newPage();
-    await page.goto('https://coinpan.com');
+    await page.goto('https://www.goodchoice.kr/product/search/2');
 
     // 브라우저 닫기 전에 wait
     await page.waitFor(10000);
