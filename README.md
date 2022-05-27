@@ -8,4 +8,8 @@
 6월 말 대시보드 구현
 
 ## 참고 문서
-https://m.blog.naver.com/pjt3591oo/222661067608
+### 자연어 처리
+https://m.blog.naver.com/pjt3591oo/222651811448
+
+### Puppeteer를 이용한 웹 크롤링
+https://velog.io/@jinuku/Puppeteer%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%9B%B9-%ED%81%AC%EB%A1%A4%EB%A7%81-%ED%95%B4%EB%B3%B4%EA%B8%B0-%EC%98%88%EC%A0%9C-1
