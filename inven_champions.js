@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 
-(async() => {
-
+(async(page_number) => {
+    const page_number = this.page_number;
     const browser = await puppeteer.launch({
         headless : false
     });
@@ -12,9 +12,9 @@ const cheerio = require('cheerio');
         width: 1366,
         height: 768
     });
-   
+  
     // access URL
-    await page.goto('https://lol.inven.co.kr/dataninfo/champion/manualTool.php');
+    await page.goto('https://lol.inven.co.kr/dataninfo/champion/manualTool.php?pg='+page_number);
 
     // GET page html
     const content = await page.content();
@@ -33,15 +33,15 @@ const cheerio = require('cheerio');
         });
     });
 
-    const pages = $("#lolDb > div.lolDbManualToolPage > div.listPage > div.paging");
-    pages.each((index, page) => {
-
-        const page_urls = $(page).find("span").text();
-        console.log({
-            index, page_urls
-        });
-    });
-
     // finish browser
     browser.close();
 })();
+
+const pages = $("#lolDb > div.lolDbManualToolPage > div.listPage > div.paging");
+pages.each((index, page) => {
+
+    const page_urls = $(page).find("span > a").attr("href");
+    console.log({
+        index, page_urls
+    });
+});
