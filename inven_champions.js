@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 
-(async(page_number) => {
+const getContents = async(page_number) => {
     const page_number = this.page_number;
     const browser = await puppeteer.launch({
         headless : false
@@ -21,8 +21,10 @@ const cheerio = require('cheerio');
 
     // load cheerio on $
     const $ = cheerio.load(content);
+
     // get all copied list with Selector
     const lists = $("#lolDbManualToolList > div.listTable > table > tbody > tr");
+    
     // circulate all list
     lists.each((index, list) => {
         const champ = $(list).find("td.champ > img").attr('src');
@@ -35,13 +37,30 @@ const cheerio = require('cheerio');
 
     // finish browser
     browser.close();
-})();
+};
 
-const pages = $("#lolDb > div.lolDbManualToolPage > div.listPage > div.paging");
-pages.each((index, page) => {
-
-    const page_urls = $(page).find("span > a").attr("href");
-    console.log({
-        index, page_urls
+const getLastPagenumber = async() => {
+    const browser = await puppeteer.launch({
+        headless : false
     });
-});
+    const page = await browser.newPage();
+
+    await page.setViewport({
+        width: 1366,
+        height: 768
+    });
+  
+    // get last page number from pagination
+    const pages = $("#lolDb > div.lolDbManualToolPage > div.listPage > div.paging");
+    pages.each((index, page) => {
+    
+        const lastPagenumber = $(page).find("span > a").attr("href");
+        console.log({
+            index, lastPagenumber
+        });
+    });
+
+    browser.close();
+    
+    return lastPagenumber;
+}
