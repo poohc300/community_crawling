@@ -14,7 +14,7 @@ const cheerio = require('cheerio');
     });
    
     // access URL
-    await page.goto('https://inven.co.kr/board/lol/4626');
+    await page.goto('https://lol.inven.co.kr/dataninfo/champion/manualTool.php');
 
     // GET page html
     const content = await page.content();
@@ -22,15 +22,23 @@ const cheerio = require('cheerio');
     // load cheerio on $
     const $ = cheerio.load(content);
     // get all copied list with Selector
-    const lists = $("#lolDbManualToolList > div.listTable > table > tbody");
-    
+    const lists = $("#lolDbManualToolList > div.listTable > table > tbody > tr");
     // circulate all list
     lists.each((index, list) => {
-         
-        const body = $(list).text();
-     
+        const champ = $(list).find("td.champ > img").attr('src');
+        const subject = $(list).find("td.subject").text();
+        const content = $(list).find("td.subject > a").attr('href');
         console.log({
-            index, body
+            index, champ, subject, content
+        });
+    });
+
+    const pages = $("#lolDb > div.lolDbManualToolPage > div.listPage > div.paging");
+    pages.each((index, page) => {
+
+        const page_urls = $(page).find("span").text();
+        console.log({
+            index, page_urls
         });
     });
 
